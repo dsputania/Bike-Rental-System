@@ -1,52 +1,72 @@
-from bikeRental import BikeRental, Customer
+import datetime
 
-def main():
-    shop = BikeRental(100)
-    customer = Customer()
+class BikeRental:
+    def __init__(self,stock=0):
+        self.stock = stock
+        #Our constructor class that instantiates bike rental shop
 
-    while True:
-        print("""
-        ====== Bike Rental Shop =======
-        1. Display available bikes
-        2. Request a bike on hourly basis $5
-        3. Request a bike on daily basis $20
-        4. Request a bike on weekly basis $60
-        5. Return a bike
-        6. Exit
-        """)
-        
-        choice = input("Enter choice: ")
-        
-        try:
-            choice = int(choice)
-        except ValueError:
-            print("That's not an int!")
-            continue
-        
-        if choice == 1:
-            shop.displaystock()
-        
-        elif choice == 2:
-            customer.rentalTime = shop.rentBikeOnHourlyBasis(customer.requestBike())
-            customer.rentalBasis = 1
+    def display_stock(self):
+        print(f"We have currently {self.stock} bikes available for rent.")
+        return self.stock
 
-        elif choice == 3:
-            customer.rentalTime = shop.rentBikeOnDailyBasis(customer.requestBike())
-            customer.rentalBasis = 2
-
-        elif choice == 4:
-            customer.rentalTime = shop.rentBikeOnWeeklyBasis(customer.requestBike())
-            customer.rentalBasis = 3
-
-        elif choice == 5:
-            customer.bill = shop.returnBike(customer.returnBike())
-            customer.rentalBasis, customer.rentalTime, customer.bikes = 0,0,0        
-        elif choice == 6:
-            break
+    def rent_hourly_basis(self,n):
+        if n <= 0:
+            print("Number of bikes should be positive")
+            return None
+        elif n > self.stock:
+            print(f"Sorry we currently have {self.stock} bikes to rent.")
+            return None
         else:
-            print("Invalid input. Please enter number between 1-6 ")        
-    print("Thank you for using the bike rental system.")
+            now = datetime.datetime.now()
+            print(f"You have rented{n} bikes on hourly basis today at {now}. ")
+            print(f"You will be charged $5 per hour for each bike.")
+            print("We hope that you enjoy our service.")
+
+            self.stock -= n
+            return now
+
+    def rent_daily_basis(self,n):
+
+        if n <= 0:
+            print("Number of bikes should be positive")
+            return None
+
+        elif n > self.stock:
+            print(f"Sorry we currently have {self.stock} bikes to rent.")
+            return None
+        else:
+            now = datetime.datetime.now
+            print(f"You have rented {n} bikes on daily basis at {now}.")
+            print("You will be charged $20 per day for each bike.")
+            print("We hope that you enjoy our service")
+
+            self.stock -= n
+            return now
+
+    def rent_weekly_basis(self,n):
+
+        if n <= 0:
+            print("Number of bikes should be positive")
+            return None
+        elif n > self.stock:
+            print(f"Sorry we currently have {self.stock} bikes available for rent.")
+            return None
+        else:
+            now = datetime.datetime.now()
+            print(f"You have rented {n}bikes on weekly basis on {now}.")
+            print("You will be charged $100 per week for each bike.")
+            print("We hope you enjoy our service.")
+
+            self.stock -= n
+            return now
 
 
-if __name__=="__main__":
-    main()
+
+
+
+
+
+
+
+
+
