@@ -162,3 +162,5 @@ class Customer:
             return self.rentalTime, self.rentalBasis, self.bikes  
         else:
             return 0,0,0
+
+        print("i like this")
